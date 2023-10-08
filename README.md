@@ -1,1 +1,1 @@
-# Brilliance
+Brilliance hub - гильдия программистов
