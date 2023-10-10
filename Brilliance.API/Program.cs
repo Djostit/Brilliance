@@ -1,34 +1,45 @@
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
-namespace Brilliance.API
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<BrillianceContext>(opt =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+    var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+    opt.UseMySql(conn, ServerVersion.AutoDetect(conn));
+});
 
-            // Add services to the container.
+builder.Services
+    .AddScoped<IPasswordHasher, PasswordHasher>()
+    .AddScoped<ITokenService, TokenService>()
+    .AddScoped<IAccountService, AccountService>();
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 
-            var app = builder.Build();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+builder.Services.ConfigureJwtAuthentication(builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>());
 
-            app.UseAuthorization();
+var app = builder.Build();
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.MapControllers();
-
-            app.Run();
-        }
-    }
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
