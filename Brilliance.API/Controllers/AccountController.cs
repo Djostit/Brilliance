@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Brilliance.API.Controllers
 {
-    [Route("api/v1/")]
     [ApiController]
+    [Route("api/v1/")]
     public class AccountController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -24,7 +24,7 @@ namespace Brilliance.API.Controllers
                 Password = userDTO.Password,
                 RoleId = userDTO.RoleId
             });
-            return CreatedAtAction(null, null);
+            return CreatedAtAction(null, null, null);
         }
     }
 }

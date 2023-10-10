@@ -1,6 +1,17 @@
+using Brilliance.MVC.Middleware;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/SignIn"; // Путь к странице входа
+            options.AccessDeniedPath = "/Account/AccessDenied"; // Путь к странице с отказом в доступе
+        });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllersWithViews();
 
@@ -14,6 +25,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseMiddleware<AuthenticationRedirectMiddleware>();
 
 app.UseAuthentication();
 

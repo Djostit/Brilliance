@@ -9,9 +9,10 @@ namespace Brilliance.API.Services
         public AccountService(BrillianceContext context)
             => _context = context;
 
-        public Task AddUser(User user, CancellationToken cancellationToken)
+        public async Task AddUser(User user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _context.Users.AddAsync(user, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<string> Authorization(string username, CancellationToken cancellationToken)
