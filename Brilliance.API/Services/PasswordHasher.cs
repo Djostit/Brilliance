@@ -1,6 +1,4 @@
-﻿using Brilliance.API.IServices;
-
-namespace Brilliance.API.Services
+﻿namespace Brilliance.API.Services
 {
     public class PasswordHasher : IPasswordHasher
     {

@@ -1,20 +1,22 @@
-using Brilliance.MVC.Middleware;
+using Brilliance.API.Client;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options =>
         {
-            options.LoginPath = "/Account/SignIn"; // Путь к странице входа
-            options.AccessDeniedPath = "/Account/AccessDenied"; // Путь к странице с отказом в доступе
+            options.LoginPath = "/Account/SignIn";
+            options.AccessDeniedPath = "/Account/AccessDenied";
         });
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddRefitClient<IBrilliance>()
+    .ConfigureHttpClient(b => b.BaseAddress = new Uri("http://localhost:10000"));
 
 var app = builder.Build();
 
@@ -26,8 +28,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseMiddleware<AuthenticationRedirectMiddleware>();
-
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -36,6 +36,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("/Account/AccessDenied");
 
 app.Run();

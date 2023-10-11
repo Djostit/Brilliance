@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Brilliance</title>
     <link rel="stylesheet" href="~/css/main.css"/>
+    <link rel="icon" type="image/svg" href="~/icon.svg"/>
 </head>
 <body class="dark">
 
@@ -26,8 +27,8 @@
                         </a>
                     </li>
                     <li class="nav-list__item">
-                        <a asp-area="" asp-controller="Account" asp-action="SignIn" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "SignIn" ? "nav-list__link--active" : "")">
-                            Sign in
+                        <a asp-area="" asp-controller="Account" asp-action="@(User.Identity.IsAuthenticated ? "SignOut" : "SignIn")" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "SignIn" ? "nav-list__link--active" : "")">
+                            @(User.Identity.IsAuthenticated ? "Sign out" : "Sign in")
                         </a>
                     </li>
                 </ul>

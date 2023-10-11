@@ -1,11 +1,7 @@
-﻿global using Brilliance.API.Behavior;
-global using Brilliance.API.Extensions;
-global using Brilliance.API.IServices;
-global using Brilliance.API.Middleware;
+﻿global using Brilliance.API.IServices;
 global using Brilliance.API.Models;
-global using Brilliance.API.Services;
+global using Brilliance.API.Query;
 global using Brilliance.Database.Context;
+global using Brilliance.Database.Entities;
 global using FluentValidation;
 global using MediatR;
-global using Brilliance.API.Query;
-global using Brilliance.Database.Entities;

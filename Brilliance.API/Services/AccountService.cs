@@ -1,5 +1,4 @@
-﻿using Brilliance.Database.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Brilliance.API.Services
 {

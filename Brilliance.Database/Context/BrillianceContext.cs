@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Brilliance.Database.Context;
 
 public partial class BrillianceContext : DbContext
-{ 
+{
     public BrillianceContext(DbContextOptions<BrillianceContext> options)
         : base(options)
     {

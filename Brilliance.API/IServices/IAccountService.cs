@@ -1,6 +1,4 @@
-﻿using Brilliance.Database.Entities;
-
-namespace Brilliance.API.IServices
+﻿namespace Brilliance.API.IServices
 {
     public interface IAccountService
     {

@@ -1,4 +1,5 @@
 ﻿using Brilliance.API.Command;
+using Brilliance.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Brilliance.API.Controllers

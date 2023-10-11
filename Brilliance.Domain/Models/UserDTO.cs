@@ -1,4 +1,4 @@
-﻿namespace Brilliance.API.Models
+﻿namespace Brilliance.Domain.Models
 {
     public class UserDTO
     {

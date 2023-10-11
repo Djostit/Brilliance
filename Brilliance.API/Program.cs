@@ -1,3 +1,7 @@
+using Brilliance.API.Behavior;
+using Brilliance.API.Extensions;
+using Brilliance.API.Middleware;
+using Brilliance.API.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

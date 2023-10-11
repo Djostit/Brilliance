@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
-
-namespace Brilliance.API.Behavior
+﻿namespace Brilliance.API.Behavior
 {
     public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
