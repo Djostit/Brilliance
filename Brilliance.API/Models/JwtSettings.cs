@@ -1,6 +1,6 @@
 ﻿namespace Brilliance.API.Models
 {
-    public class JwtSettings
+    public record JwtSettings
     {
         public string SecretKey { get; set; }
         public string Issuer { get; set; }
