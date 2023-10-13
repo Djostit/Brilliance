@@ -24,9 +24,9 @@ namespace Brilliance.MVC.Controllers
         public IActionResult SignIn()
             => View();
 
-        [HttpPost("signin")]
+        [HttpPost()]
         [AllowAnonymous]
-        public async Task<IActionResult> SignInPost(UserDTO userDTO)
+        public async Task<IActionResult> SignIn(UserDTO userDTO)
         {
             var response = "";
             try
@@ -48,17 +48,18 @@ namespace Brilliance.MVC.Controllers
                     new Claim("AccessToken", response)
                 }, CookieAuthenticationDefaults.AuthenticationScheme)),
                 new AuthenticationProperties() { IsPersistent = true });
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("/");
         }
 
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("/");
         }
 
         public IActionResult Profile()
             => View();
+
         [AllowAnonymous]
         public IActionResult AccessDenied()
             => View();
