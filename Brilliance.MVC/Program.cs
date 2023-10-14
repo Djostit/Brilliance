@@ -5,11 +5,15 @@ using Refit;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options =>
-        {
-            options.LoginPath = "/Account/SignIn";
-            options.AccessDeniedPath = "/Account/AccessDenied";
-        });
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/SignIn";
+        options.LogoutPath = "/Account/SignOut";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.SlidingExpiration = true;
+        options.Cookie.Name = Guid.NewGuid().ToString();
+    });
 
 builder.Services.AddAuthorization();
 
