@@ -24,20 +24,14 @@ namespace Brilliance.MVC.Controllers
         public IActionResult SignIn()
             => View();
 
-        [HttpPost()]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> SignIn(UserDTO userDTO)
         {
-            var response = "";
             try
             {
-                response = await _brilliance.Authorization(userDTO);
-            }
-            catch(ApiException ex) 
-            {
-                return View("SignIn", userDTO);
-            }
-            await HttpContext.SignInAsync(
+                var response = await _brilliance.Authorization(userDTO);
+                await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
@@ -48,20 +42,21 @@ namespace Brilliance.MVC.Controllers
                     new Claim("AccessToken", response)
                 }, CookieAuthenticationDefaults.AuthenticationScheme)),
                 new AuthenticationProperties() { IsPersistent = true });
-            return RedirectToAction("/");
+                return Redirect("/");
+            }
+            catch(ApiException) 
+            {
+                return View("SignIn", userDTO);
+            }
         }
 
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("/");
+            return Redirect("/");
         }
 
         public IActionResult Profile()
-            => View();
-
-        [AllowAnonymous]
-        public IActionResult AccessDenied()
             => View();
     }
 }

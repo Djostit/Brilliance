@@ -26,6 +26,22 @@
                             Posts
                         </a>
                     </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-list__item">
+                            <a asp-area="" asp-controller="Post" asp-action="Add" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Add" ? "nav-list__link--active" : "")">
+                                Add post
+                            </a>
+                        </li>
+                    }
+                    @if(User.IsInRole("2"))
+                    {
+                        <li class="nav-list__item">
+                            <a asp-area="" asp-controller="Admin" asp-action="Panel" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Panel" ? "nav-list__link--active" : "")">
+                                Panel
+                            </a>
+                        </li>
+                    }
                     <li class="nav-list__item">
                         <a asp-area="" asp-controller="Account" asp-action="@(User.Identity.IsAuthenticated ? "SignOut" : "SignIn")" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "SignIn" ? "nav-list__link--active" : "")">
                             @(User.Identity.IsAuthenticated ? "Sign out" : "Sign in")

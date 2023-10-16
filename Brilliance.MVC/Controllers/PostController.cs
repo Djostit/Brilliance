@@ -3,11 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Brilliance.MVC.Controllers
 {
-    [Authorize]
     public class PostController : Controller
     {
-        [Authorize(Roles = "2")]
+        public IActionResult Post() 
+            => View();
         public IActionResult Posts()
             => View();
+        [Authorize]
+        public IActionResult Add()
+            => View();
+
+        [Authorize]
+        [HttpPost()]
+        public IActionResult Add(Type type) 
+            => Ok();
     }
 }

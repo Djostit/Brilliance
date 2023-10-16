@@ -9,11 +9,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Account/SignIn";
         options.LogoutPath = "/Account/SignOut";
-        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.AccessDeniedPath = "/Home/AccessDenied";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-        options.SlidingExpiration = true;
         options.Cookie.Name = Guid.NewGuid().ToString();
     });
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true; 
+});
 
 builder.Services.AddAuthorization();
 
@@ -39,7 +43,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapFallbackToFile("/Account/AccessDenied");
 
 app.Run();

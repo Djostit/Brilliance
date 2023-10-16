@@ -436,16 +436,21 @@ body {
 }
 
 .input-field:focus,
-.input-field:valid {
+.input-field:valid,
+.input-select:focus,
+.input-select:valid {
     outline: 0;
     border-bottom-color: var(--accent);
 }
 
 .input-field:focus + .input-label,
-.input-field:valid + .input-label {
+.input-field:valid + .input-label,
+.input-select:focus + .input-label,
+.input-select:valid + .input-label{
     color: var(--accent);
     transform: translateY(-1.5rem);
 }
+
 
 .action {
     margin-top: 2rem;
