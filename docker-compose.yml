@@ -5,25 +5,31 @@ volumes:
 
 services:
   database:
-    #Pull the latest mysql image
     image: mysql
-    #Map port 3306 on the mysql container to port 3306 in the host
+    command: "mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE"
     ports:
       - "3306:3306"
-    #Specify where the persisted Data should be stored
-    volumes:
-      - datafiles:/var/lib/mysql
-      - "~/sql-scripts/setup.sql:/docker-entrypoint-initdb.d/1.sql"
+    # volumes:
+    #   - datafiles:/var/lib/mysql
+    #   - "~/sql-scripts/setup.sql:/docker-entrypoint-initdb.d/1.sql"
     restart: always
-    #Specify Environment Variables for mysql
+    env_file:
+      - ".env"
     environment: 
-      MYSQL_ROOT_PASSWORD: Root0++
-      MYSQL_USER: newuser
-      MYSQL_PASSWORD: pass@word1234
-      MYSQL_DATABASE: Usersdb
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
 
   brilliance.api:
     image: ${DOCKER_REGISTRY-}brillianceapi
+    ports:
+      - "5000:80"
+    depends_on: 
+      - database
     build:
       context: .
       dockerfile: Brilliance.API/Dockerfile
+    environment: 
+      - DBHOST=database
+      - ASPNETCORE_ENVIRONMENT=Development
