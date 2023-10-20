@@ -6,13 +6,12 @@ volumes:
 services:
   database:
     image: mysql
-    command: "mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE"
+    # command: "mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE"
     ports:
       - "3306:3306"
-    # volumes:
-    #   - datafiles:/var/lib/mysql
-    #   - "~/sql-scripts/setup.sql:/docker-entrypoint-initdb.d/1.sql"
-    restart: always
+    volumes:
+      - "./mysql-scripts:/docker-entrypoint-initdb.d"
+    # restart: always
     env_file:
       - ".env"
     environment: 
