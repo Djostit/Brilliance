@@ -1,14 +1,25 @@
-﻿namespace Brilliance.Database.Entities;
+﻿using Brilliance.Database.Entities.Base;
+using Brilliance.Database.Entities.Base.Interface;
+using System;
+using System.Collections.Generic;
 
-public partial class User
+namespace Brilliance.Database.Entities;
+
+public partial class User : Entity
 {
     public int Id { get; set; }
 
-    public int RoleId { get; set; }
+    public int IdRole { get; set; }
 
     public string Username { get; set; } = null!;
 
     public string Password { get; set; } = null!;
 
-    public virtual UserRole Role { get; set; } = null!;
+    public DateTime RegDate { get; set; }
+
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+    public virtual Role IdRoleNavigation { get; set; } = null!;
+
+    public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 }

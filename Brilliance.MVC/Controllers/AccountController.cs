@@ -1,5 +1,6 @@
 ﻿using Brilliance.API.Client;
 using Brilliance.Domain.Models;
+using Brilliance.Domain.Models.DTO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;

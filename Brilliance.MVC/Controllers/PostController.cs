@@ -5,17 +5,17 @@ namespace Brilliance.MVC.Controllers
 {
     public class PostController : Controller
     {
-        public IActionResult Post() 
+        public IActionResult Details() 
             => View();
-        public IActionResult Posts()
+        public IActionResult Index()
             => View();
         [Authorize]
-        public IActionResult Add()
+        public IActionResult Create()
             => View();
 
         [Authorize]
-        [HttpPost()]
-        public IActionResult Add(Type type) 
+        [HttpPost]
+        public IActionResult Create(Type type) 
             => Ok();
     }
 }

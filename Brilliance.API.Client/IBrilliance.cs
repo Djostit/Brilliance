@@ -1,4 +1,5 @@
 ﻿using Brilliance.Domain.Models;
+using Brilliance.Domain.Models.DTO;
 using Refit;
 
 namespace Brilliance.API.Client

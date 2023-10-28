@@ -2,6 +2,8 @@ using Brilliance.API.Behavior;
 using Brilliance.API.Extensions;
 using Brilliance.API.Middleware;
 using Brilliance.API.Services;
+using Brilliance.API.Services.Interfaces;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -14,14 +16,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<BrillianceContext>(opt =>
 {
-    var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+    var conn = builder.Configuration.GetConnectionString("LocalConnection");
     opt.UseMySql(conn, ServerVersion.AutoDetect(conn));
 });
 
 builder.Services
     .AddScoped<IPasswordHasher, PasswordHasher>()
     .AddScoped<ITokenService, TokenService>()
-    .AddScoped<IAccountService, AccountService>();
+    .AddScoped<IAccountService, AccountService>()
+    .AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 
@@ -29,6 +32,8 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), incl
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
 builder.Services.ConfigureJwtAuthentication(builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>());
+
+builder.Services.AddMapster();
 
 var app = builder.Build();
 

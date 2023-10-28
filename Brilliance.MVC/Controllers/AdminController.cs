@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Brilliance.MVC.Controllers
 {
-    [Authorize(Roles = "2")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        public IActionResult Panel()
+        public IActionResult Index()
             => View();
     }
 }

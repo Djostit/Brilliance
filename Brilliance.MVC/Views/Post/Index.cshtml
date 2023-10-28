@@ -9,9 +9,9 @@
             <form method="get" asp-action="Posts" class="card-form">
                 <div class="input">
                     <select class="input-select" required name="sort" onchange="this.form.submit()">
-                        @for(int i = 0; i < 10; ++i)
+                        @for (int i = 0; i < 10; ++i)
                         {
-                            <option value="@i" >Test - @i</option>
+                            <option value="@i">Test - @i</option>
                         }
                     </select>
                     <label class="input-label" for="sort">Sort</label>
@@ -19,7 +19,7 @@
             </form>
         </div>
         <ul class="projects">
-            @for(int i = 0; i < 10; ++i)
+            @for (int i = 0; i < 10; ++i)
             {
                 <li class="project">
                     <a href="#">

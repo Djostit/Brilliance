@@ -15,7 +15,7 @@ namespace Brilliance.API.Services
         }
 
         public async Task<string> Authorization(string username, CancellationToken cancellationToken)
-            => (await _context.Users.FirstAsync(u => u.Username == username, cancellationToken)).RoleId.ToString();
+            => (await _context.Users.Include(x => x.IdRoleNavigation).FirstAsync(u => u.Username == username, cancellationToken)).IdRoleNavigation.Name;
 
         public Task<List<User>> GetUsers(CancellationToken cancellationToken)
         {

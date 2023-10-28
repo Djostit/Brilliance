@@ -17,19 +17,19 @@
                 </a>
                 <ul class="nav-list">
                     <li class="nav-list__item">
-                        <a href="/" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "nav-list__link--active" : "")">
+                        <a href="/" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Index" && ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "nav-list__link--active" : "")">
                             Home
                         </a>
                     </li>
                     <li class="nav-list__item">
-                        <a asp-area="" asp-controller="Post" asp-action="Posts" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Posts" ? "nav-list__link--active" : "")">
+                        <a asp-area="" asp-controller="Post" asp-action="Index" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Index" && ViewContext.RouteData.Values["controller"].ToString() == "Post" ? "nav-list__link--active" : "")">
                             Posts
                         </a>
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-list__item">
-                            <a asp-area="" asp-controller="Post" asp-action="Add" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Add" ? "nav-list__link--active" : "")">
+                            <a asp-area="" asp-controller="Post" asp-action="Create" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Create" && ViewContext.RouteData.Values["controller"].ToString() == "Post" ? "nav-list__link--active" : "")">
                                 Add post
                             </a>
                         </li>
@@ -37,7 +37,7 @@
                     @if(User.IsInRole("2"))
                     {
                         <li class="nav-list__item">
-                            <a asp-area="" asp-controller="Admin" asp-action="Panel" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Panel" ? "nav-list__link--active" : "")">
+                            <a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-list__link @(ViewContext.RouteData.Values["action"].ToString() == "Index" && ViewContext.RouteData.Values["controller"].ToString() == "Admin" ? "nav-list__link--active" : "")">
                                 Panel
                             </a>
                         </li>
