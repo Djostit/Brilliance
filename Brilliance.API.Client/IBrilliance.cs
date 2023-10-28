@@ -11,6 +11,9 @@ namespace Brilliance.API.Client
         Task<string> Authorization([Body] UserDTO userDTO);
 
         [Get("/api/v1/posts")]
-        Task<IPage<PostDTO>> GetPosts([AliasAs("page")] int page, [AliasAs("size")] int size);
+        Task<Page<PostDTO>> GetPosts([AliasAs("page")] int page, [AliasAs("size")] int size);
+
+        [Get("/api/v1/posts/{id}")]
+        Task<PostDTO> GetPost(int id);
     }
 }

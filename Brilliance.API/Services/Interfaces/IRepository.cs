@@ -1,4 +1,6 @@
-﻿namespace Brilliance.API.Services.Interfaces
+﻿using Brilliance.Domain.Models;
+
+namespace Brilliance.API.Services.Interfaces
 {
     public interface IRepository<T>
     {
@@ -7,7 +9,7 @@
         Task<bool> Exist(T item, CancellationToken cancellationToken = default);
         Task<int> GetCount(CancellationToken cancellationToken = default);
         Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default);
-        Task<IPage<T>> GetPage(int page, int size, CancellationToken cancellationToken = default);
+        Task<Page<T>> GetPage(int page, int size, CancellationToken cancellationToken = default);
         Task<T> GetById(int id, CancellationToken cancellationToken = default);
         Task<T> Add(T item, CancellationToken cancellationToken = default);
         Task<T> Update(T item, CancellationToken cancellationToken = default);

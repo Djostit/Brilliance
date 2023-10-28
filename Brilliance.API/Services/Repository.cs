@@ -1,5 +1,6 @@
 ﻿using Brilliance.API.Services.Interfaces;
 using Brilliance.Database.Entities.Base;
+using Brilliance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Brilliance.API.Services
@@ -61,12 +62,18 @@ namespace Brilliance.API.Services
         public async Task<int> GetCount(CancellationToken cancellationToken = default)
             => await Items.CountAsync(cancellationToken);
 
-        public async Task<IPage<T>> GetPage(int page, int size, CancellationToken cancellationToken = default)
+        public async Task<Page<T>> GetPage(int page, int size, CancellationToken cancellationToken = default)
         {
             var query = Items;
             var count = await query.CountAsync(cancellationToken);
             var items = await query.Skip((page - 1) * size).Take(size).ToListAsync(cancellationToken);
-            return new Page(items, count, page, size);
+            return new Page<T>
+            {
+                Items = items,
+                PageIndex = page,
+                Size = size,
+                TotalCount = count
+            };
         }
 
         public async Task<T> Update(T item, CancellationToken cancellationToken = default)
@@ -76,10 +83,10 @@ namespace Brilliance.API.Services
             return item;
         }
 
-        protected record Page(IEnumerable<T> Items, int TotalCount, int PageIndex, int Size) : IPage<T>
-        {
-            public int TotalPages => (int)Math.Ceiling((double)TotalCount / Size);
-        }
+        //protected record Page(IEnumerable<T> Items, int TotalCount, int PageIndex, int Size) : IPage<T>
+        //{
+        //    public int TotalPages => (int)Math.Ceiling((double)TotalCount / Size);
+        //}
 
         public async Task<int> SaveChanges(CancellationToken cancellationToken = default)
             => await _context.SaveChangesAsync(cancellationToken);

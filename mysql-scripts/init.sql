@@ -52,6 +52,13 @@ create table db_brilliance.posts
     references db_brilliance.categories(id)
 );
 
+insert into db_brilliance.posts(id_user, id_category, title, description)
+values
+(1, 1, 'WPF its bad or not?' , 'Empty'),
+(1, 2, 'Dont use anymore winforms', 'empty'),
+(1, 3, 'Its best framerwork in world', 'empty');
+
+
 create table db_brilliance.comments
 (
 	id int not null primary key auto_increment,
