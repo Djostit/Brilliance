@@ -1,4 +1,5 @@
-﻿using Brilliance.MVC.Models;
+﻿using Brilliance.API.Client;
+using Brilliance.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,8 +7,11 @@ namespace Brilliance.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-            => View();
+        private readonly IBrilliance _brilliance;
+        public HomeController(IBrilliance brilliance)
+            => _brilliance = brilliance;
+        public async Task<IActionResult> Index()
+            => View(await _brilliance.GetPosts(1, 5));
 
         public IActionResult Privacy()
             => View();

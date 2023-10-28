@@ -1,7 +1,9 @@
-﻿@{
+﻿@using Brilliance.API.Services.Interfaces;
+@{
     ViewData["Title"] = "Home";
 }
 
+@model IPage<PostDTO>
 <header class="header">
     <div class="header__wrapper">
         <h1 class="header__title">
@@ -15,6 +17,15 @@
 
 <main class="section">
     <div class="container">
-
+        <ul class="projects">
+            @foreach(var item in Model.Items)
+            {
+                <li class="project">
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">
+                        <h3 class="project__title">@item.Title</h3>
+                    </a>
+                </li>
+            }
+        </ul>
     </div>
 </main>

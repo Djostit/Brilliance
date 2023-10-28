@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Brilliance.API\Brilliance.API.csproj" />
     <ProjectReference Include="..\Brilliance.Domain\Brilliance.Domain.csproj" />
   </ItemGroup>
 
