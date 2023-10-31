@@ -23,8 +23,11 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddRefitClient<IBrilliance>()
-    .ConfigureHttpClient(b => b.BaseAddress = new Uri("http://localhost:10000"));
+builder.Services.AddRefitClient<IPost>()
+    .ConfigureHttpClient(b => b.BaseAddress = new Uri("http://localhost:10000/api/v1/posts"));
+
+builder.Services.AddRefitClient<IUser>()
+    .ConfigureHttpClient(b => b.BaseAddress = new Uri("http://localhost:1000/api/v1/users"));
 
 var app = builder.Build();
 

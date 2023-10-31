@@ -1,5 +1,6 @@
 ﻿using Brilliance.API.Commands.AddEntity;
 using Brilliance.API.Queris.GetData;
+using Brilliance.API.Services.Interfaces;
 using Brilliance.Domain.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

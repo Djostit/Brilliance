@@ -1,4 +1,4 @@
-﻿namespace Brilliance.API.IServices
+﻿namespace Brilliance.API.Services.Interfaces
 {
     public interface ITokenService
     {
