@@ -2,7 +2,7 @@
 {
     public interface IPost
     {
-        [Get("/")]
+        [Get("")]
         Task<Page<PostDTO>> GetPosts([AliasAs("page")] int page, [AliasAs("size")] int size);
 
         [Get("/{id}")]

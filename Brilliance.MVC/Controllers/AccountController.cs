@@ -14,9 +14,9 @@ namespace Brilliance.MVC.Controllers
     [Microsoft.AspNetCore.Authorization.Authorize]
     public class AccountController : Controller
     {
-        private readonly IBrilliance _brilliance;
-        public AccountController(IBrilliance brilliance)
-            => _brilliance = brilliance;
+        private readonly IUser _user;
+        public AccountController(IUser user)
+            => _user = user;
 
         [AllowAnonymous]
         public IActionResult SignUp()
@@ -31,7 +31,7 @@ namespace Brilliance.MVC.Controllers
         {
             try
             {
-                var response = await _brilliance.Authorization(userDTO);
+                var response = await _user.Authorization(userDTO);
                 await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>

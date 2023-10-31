@@ -1,4 +1,5 @@
 ﻿using Brilliance.API.Client;
+using Brilliance.Domain.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,13 +7,11 @@ namespace Brilliance.MVC.Controllers
 {
     public class PostController : Controller
     {
-        private readonly IBrilliance _brilliance;
-        public PostController(IBrilliance brilliance)
-        {
-            _brilliance = brilliance;
-        }
+        private readonly IPost _post;
+        public PostController(IPost post)
+            => _post = post;
         public async Task<IActionResult> Details([FromRoute] int id) 
-            => View(await _brilliance.GetPost(id));
+            => View(await _post.GetPost(id));
         public IActionResult Index()
             => View();
         [Authorize]
@@ -21,7 +20,7 @@ namespace Brilliance.MVC.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Create(Type type) 
+        public IActionResult Create(PostDTO postDTO) 
             => Ok();
     }
 }
