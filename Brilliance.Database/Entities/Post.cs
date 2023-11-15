@@ -1,11 +1,9 @@
-﻿using Brilliance.Database.Entities.Base;
-using Brilliance.Database.Entities.Base.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Brilliance.Database.Entities;
 
-public partial class Post : Entity
+public partial class Post
 {
     public int Id { get; set; }
 
@@ -19,9 +17,9 @@ public partial class Post : Entity
 
     public DateTime Date { get; set; }
 
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
     public virtual Category IdCategoryNavigation { get; set; } = null!;
 
     public virtual User IdUserNavigation { get; set; } = null!;
-
-    public virtual ICollection<Comment> IdComments { get; set; } = new List<Comment>();
 }

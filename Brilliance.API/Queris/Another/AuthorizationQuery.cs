@@ -1,6 +1,6 @@
 ﻿using Brilliance.API.Services.Interfaces;
 
-namespace Brilliance.API.Query
+namespace Brilliance.API.Queris.Another
 {
     internal record AuthorizationQuery : IRequest<string>
     {
@@ -9,8 +9,8 @@ namespace Brilliance.API.Query
         internal class AuthorizationQueryHanlder : IRequestHandler<AuthorizationQuery, string>
         {
             private readonly ITokenService _tokenService;
-            private readonly IAccountService _accountService;
-            public AuthorizationQueryHanlder(ITokenService tokenService, IAccountService accountService)
+            private readonly IUserService _accountService;
+            public AuthorizationQueryHanlder(ITokenService tokenService, IUserService accountService)
             {
                 _tokenService = tokenService;
                 _accountService = accountService;

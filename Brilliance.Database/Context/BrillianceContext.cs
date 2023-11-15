@@ -50,13 +50,21 @@ public partial class BrillianceContext : DbContext
 
             entity.ToTable("comments");
 
+            entity.HasIndex(e => e.IdPost, "id_post");
+
             entity.HasIndex(e => e.IdUser, "id_user");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IdPost).HasColumnName("id_post");
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .HasColumnName("name");
+
+            entity.HasOne(d => d.IdPostNavigation).WithMany(p => p.Comments)
+                .HasForeignKey(d => d.IdPost)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("comments_ibfk_2");
 
             entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.IdUser)
@@ -97,28 +105,6 @@ public partial class BrillianceContext : DbContext
                 .HasForeignKey(d => d.IdUser)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("posts_ibfk_1");
-
-            entity.HasMany(d => d.IdComments).WithMany(p => p.IdPosts)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PostsComment",
-                    r => r.HasOne<Comment>().WithMany()
-                        .HasForeignKey("IdComment")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("posts_comments_ibfk_2"),
-                    l => l.HasOne<Post>().WithMany()
-                        .HasForeignKey("IdPost")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("posts_comments_ibfk_1"),
-                    j =>
-                    {
-                        j.HasKey("IdPost", "IdComment")
-                            .HasName("PRIMARY")
-                            .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-                        j.ToTable("posts_comments");
-                        j.HasIndex(new[] { "IdComment" }, "id_comment");
-                        j.IndexerProperty<int>("IdPost").HasColumnName("id_post");
-                        j.IndexerProperty<int>("IdComment").HasColumnName("id_comment");
-                    });
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -139,10 +125,12 @@ public partial class BrillianceContext : DbContext
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.IdRole, "fk_role_id");
+            entity.HasIndex(e => e.IdRole, "id_role");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.IdRole).HasColumnName("id_role");
+            entity.Property(e => e.IdRole)
+                .HasDefaultValueSql("'1'")
+                .HasColumnName("id_role");
             entity.Property(e => e.Password)
                 .HasMaxLength(128)
                 .HasColumnName("password");
@@ -157,7 +145,7 @@ public partial class BrillianceContext : DbContext
             entity.HasOne(d => d.IdRoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdRole)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_role_id");
+                .HasConstraintName("users_ibfk_1");
         });
 
         OnModelCreatingPartial(modelBuilder);

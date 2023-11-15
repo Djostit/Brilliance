@@ -1,34 +1,39 @@
 version: '3.4'
 
-volumes:
-  datafiles:
+networks:
+  dev:
+    driver: bridge
 
 services:
-  database:
-    image: mysql
-    # command: "mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE"
+  app_api:
+    image: ${DOCKER_REGISTRY-}webapi
+    depends_on:
+    - "app_db"
+    container_name: app_api
     ports:
-      - "3306:3306"
-    volumes:
-      - "./mysql-scripts:/docker-entrypoint-initdb.d"
-    # restart: always
-    env_file:
-      - ".env"
-    environment: 
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-
-  brilliance.api:
-    image: ${DOCKER_REGISTRY-}brillianceapi
-    ports:
-      - "5000:80"
-    depends_on: 
-      - database
+    - "8080:80"
     build:
-      context: .
-      dockerfile: Brilliance.API/Dockerfile
-    environment: 
-      - DBHOST=database
-      - ASPNETCORE_ENVIRONMENT=Development
+        context: .
+        dockerfile: Dockerfile
+    environment:
+    - ConnectionStrings__DefaultConnection=host=app_db;username=root;password=1234;port=3306;database=db_brilliance;
+    - ASPNETCORE_URLS=http://+:80
+    - ASPNETCORE_ENVIRONMENT=Development 
+    networks:
+    - dev
+
+  app_db:
+    image: mysql
+    container_name: app_db
+    environment:
+    - MYSQL_ROOT_PASSWORD=1234
+    - MYSQL_DATABASE=db_brilliance
+    ports:
+    - "3307:3306"
+    restart: always
+    volumes:
+    - app_data:/var/lib/mysql/
+    networks:
+    - dev
+volumes:
+  app_data:

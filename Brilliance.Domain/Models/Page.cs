@@ -1,12 +1,9 @@
-﻿using System.Drawing;
-
-namespace Brilliance.Domain.Models
+﻿namespace Brilliance.Domain.Models
 {
-    public class Page<T>
+    public class Page
     {
-        public IEnumerable<T> Items { get; set; }
         public int TotalCount { get; set; }
-        public int PageIndex { get; set; }
+        public int CurrentPage { get; set; }
         public int Size { get; set; }
         public int TotalPages => (int)Math.Ceiling((double)TotalCount / Size);
     }

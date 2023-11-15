@@ -1,11 +1,9 @@
-﻿using Brilliance.Database.Entities.Base;
-using Brilliance.Database.Entities.Base.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Brilliance.Database.Entities;
 
-public partial class User : Entity
+public partial class User
 {
     public int Id { get; set; }
 

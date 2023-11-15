@@ -9,6 +9,14 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Host.CreateDefaultBuilder(args)
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.UseKestrel();
+        webBuilder.UseUrls("http://+:80");
+        webBuilder.UseStartup<Program>();
+    });
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -16,15 +24,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<BrillianceContext>(opt =>
 {
-    var conn = builder.Configuration.GetConnectionString("LocalConnection");
+    var conn = builder.Configuration.GetConnectionString("DefaultConnection");
     opt.UseMySql(conn, ServerVersion.AutoDetect(conn));
 });
 
 builder.Services
     .AddScoped<IPasswordHasher, PasswordHasher>()
     .AddScoped<ITokenService, TokenService>()
-    .AddScoped<IAccountService, AccountService>()
-    .AddScoped(typeof(IRepository<>), typeof(Repository<>));
+    .AddScoped<IUserService, UserService>();
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 
@@ -39,11 +46,8 @@ var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseAuthentication();
 

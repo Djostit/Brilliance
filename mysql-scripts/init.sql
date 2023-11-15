@@ -1,3 +1,5 @@
+create database if not exists db_brilliance;
+
 create table db_brilliance.roles
 (
 	id int not null primary key auto_increment,
@@ -16,7 +18,6 @@ create table db_brilliance.users
      password varchar(128) not null,
      regDate datetime not null default current_timestamp,
      
-     constraint fk_role_id
      foreign key (id_role)
      references db_brilliance.roles(id)
 );
@@ -58,26 +59,18 @@ values
 (1, 2, 'Dont use anymore winforms', 'empty'),
 (1, 3, 'Its best framerwork in world', 'empty');
 
+select * from db_brilliance.posts;
 
 create table db_brilliance.comments
 (
 	id int not null primary key auto_increment,
     id_user int not null,
+    id_post int not null,
     name varchar(100) not null,
     
     foreign key (id_user)
-    references db_brilliance.users(id)
-);
-
-create table db_brilliance.posts_comments
-(
-	id_post int not null,
-    id_comment int not null,
-    primary key (id_post, id_comment),
+    references db_brilliance.users(id),
     
     foreign key (id_post)
-	references db_brilliance.posts(id),
-    
-    foreign key (id_comment)
-    references db_brilliance.comments (id)
-)
+    references db_brilliance.posts(id)
+);
