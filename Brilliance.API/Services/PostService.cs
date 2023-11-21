@@ -1,5 +1,6 @@
 ﻿using Brilliance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace Brilliance.API.Services
 {
@@ -23,9 +24,25 @@ namespace Brilliance.API.Services
             await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public Task<Post> GetPost(int id, CancellationToken cancellationToken = default)
+        public async Task<PostDTO> GetPost(int id, CancellationToken cancellationToken = default)
         {
-            return _context.Posts.Include(x => x.Comments).FirstAsync(x => x.Id == id, cancellationToken);
+            return await _context.Posts
+                .Include(x => x.Comments)
+                .Select(x => new PostDTO
+                {
+                    Id = x.Id,
+                    IdUser = x.IdUser,
+                    IdCategory = x.IdCategory,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Date = x.Date,
+                    Comments = x.Comments.Select(x => new CommentDTO
+                    {
+                        Id = x.Id,
+                        Username = x.IdUserNavigation.Username,
+                        Name = x.Name
+                    }).ToList()
+                }).FirstAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<Pagination<Post>> GetPosts(int page, int size, string sort, CancellationToken cancellationToken = default)

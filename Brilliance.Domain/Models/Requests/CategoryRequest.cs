@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Brilliance.Domain.Models.DTO
+namespace Brilliance.Domain.Models.Requests
 {
-    public class RoleDTO
+    public class CategoryRequest
     {
         public string Name { get; set; } = null!;
     }

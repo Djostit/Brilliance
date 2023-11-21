@@ -1,4 +1,6 @@
-﻿namespace Brilliance.API.Controllers
+﻿using Brilliance.Domain.Models.Requests;
+
+namespace Brilliance.API.Controllers
 {
     [ApiController]
     [Route("api/v1/posts")]
@@ -19,9 +21,9 @@
             => Ok(await _mediator.Send(new GetPostByIdQuery(id)));
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(PostDTO postDTO)
+        public async Task<IActionResult> CreatePost(PostRequest post)
         {
-            await _mediator.Send(new AddPostCommand(postDTO.IdUser, postDTO.IdCategory, postDTO.Title, postDTO.Description));
+            await _mediator.Send(new AddPostCommand(post.IdUser, post.IdCategory, post.Title, post.Description));
             return CreatedAtAction(null, null, null);
         }
 

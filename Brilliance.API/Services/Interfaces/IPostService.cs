@@ -6,7 +6,7 @@ namespace Brilliance.API.Services.Interfaces
     {
         public Task AddPost(Post post, CancellationToken cancellationToken = default);
         public Task DeletePost(int id, CancellationToken cancellationToken = default);
-        public Task<Post> GetPost(int id, CancellationToken cancellationToken = default);
+        public Task<PostDTO> GetPost(int id, CancellationToken cancellationToken = default);
         public Task<Pagination<Post>> GetPosts(int page, int size, string sort, CancellationToken cancellationToken = default);
         public Task<bool> IsExists(int id, CancellationToken cancellationToken = default);
     }

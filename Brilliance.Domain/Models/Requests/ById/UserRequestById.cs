@@ -1,7 +1,8 @@
-﻿namespace Brilliance.Domain.Models.DTO
+﻿namespace Brilliance.Domain.Models.Requests.ById
 {
-    public class UserDTO
+    public class UserRequestById
     {
+        public int Id { get; set; } 
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
     }

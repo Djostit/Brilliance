@@ -1,14 +1,19 @@
 ﻿using Brilliance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Brilliance.API.Services
 {
     public class UserService : IUserService
     {
         private readonly BrillianceContext _context;
-        public UserService(BrillianceContext context)
-            => _context = context;
-        public async Task<string> Authorization(string username, CancellationToken cancellationToken)
+        private readonly IPasswordHasher _passwordHasher;
+        public UserService(BrillianceContext context, IPasswordHasher passwordHasher)
+        {
+            _context = context;
+            _passwordHasher = passwordHasher;
+        }
+        public async Task<string> GetUserRole(string username, CancellationToken cancellationToken)
             => (await _context.Users.Include(x => x.IdRoleNavigation).FirstAsync(u => u.Username == username, cancellationToken)).IdRoleNavigation.Name;
         public async Task CreateUser(User user, CancellationToken cancellationToken)
         {
@@ -57,6 +62,12 @@ namespace Brilliance.API.Services
         public async Task<bool> IsExistsSelfUsername(int id, string username, CancellationToken cancellationToken)
         {
             return await _context.Users.AnyAsync(x => x.Id != id && x.Username == username, cancellationToken);
+        }
+
+        public async Task<bool> Authorization(string username, string password, CancellationToken cancellationToken = default)
+        {
+            var user = await _context.Users.FirstAsync(x => x.Username == username, cancellationToken);
+            return _passwordHasher.VerifyPassword(user.Password, password);
         }
     }
 }

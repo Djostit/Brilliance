@@ -1,4 +1,6 @@
-﻿namespace Brilliance.API.Controllers
+﻿using Brilliance.Domain.Models.Requests;
+
+namespace Brilliance.API.Controllers
 {
     [ApiController]
     [Route("api/v1/comment")]
@@ -16,9 +18,9 @@
         /// <param name="commentDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateComment(CommentDTO commentDTO)
+        public async Task<IActionResult> CreateComment(CommentRequest comment)
         {
-            await _mediator.Send(new AddCommentCommand(commentDTO.IdPost, commentDTO.IdUser, commentDTO.Name));
+            await _mediator.Send(new AddCommentCommand(comment.IdPost, comment.IdUser, comment.Name));
             return CreatedAtAction(null, null, null);
         }
 

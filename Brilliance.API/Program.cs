@@ -25,7 +25,8 @@ builder.Services
     .AddScoped<IUserService, UserService>()
     .AddScoped<IPostService, PostService>()
     .AddScoped<ICommentService, CommentService>()
-    .AddScoped<ICategoryService, CategoryService>();
+    .AddScoped<ICategoryService, CategoryService>()
+    .AddTransient<SeedDataService>();
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 
@@ -43,8 +44,8 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHsts();
-app.UseHttpsRedirection();
+//app.UseHsts();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 

@@ -1,4 +1,6 @@
 ﻿using Brilliance.API.Commands.EditEntity;
+using Brilliance.Domain.Models.Requests;
+using Brilliance.Domain.Models.Requests.ById;
 
 namespace Brilliance.API.Controllers
 {
@@ -15,32 +17,32 @@ namespace Brilliance.API.Controllers
         /// <summary>
         /// Авторизация пользователя 
         /// </summary>
-        /// <param name="userDTO"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("authorization")]
-        public async Task<IActionResult> Authorization(UserDTO userDTO)
-            => Ok(await _mediator.Send(new AuthorizationQuery { Username = userDTO.Username, Password = userDTO.Password }));
+        public async Task<IActionResult> Authorization(UserRequest user)
+            => Ok(await _mediator.Send(new AuthorizationQuery(user.Username, user.Password)));
 
         /// <summary>
         /// Создание пользователя
         /// </summary>
-        /// <param name="userDTO"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserDTO userDTO)
+        public async Task<IActionResult> CreateUser(UserRequest user)
         {
-            await _mediator.Send(new AddUserCommand(userDTO.Username, userDTO.Password));
+            await _mediator.Send(new AddUserCommand(user.Username, user.Password));
             return Ok();
         }
         /// <summary>
         /// Обновление пользователя
         /// </summary>
-        /// <param name="userDTO"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateUser(UserDTO userDTO)
+        public async Task<IActionResult> UpdateUser(UserRequestById user)
         {
-            await _mediator.Send(new EditUserCommand(userDTO.Id, userDTO.Username, userDTO.Password));
+            await _mediator.Send(new EditUserCommand(user.Id, user.Username, user.Password));
             return Ok();
         }
         /// <summary>

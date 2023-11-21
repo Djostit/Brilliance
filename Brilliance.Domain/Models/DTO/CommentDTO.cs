@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Brilliance.Database.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,9 @@ namespace Brilliance.Domain.Models.DTO
     {
         public int Id { get; set; }
 
-        public int IdUser { get; set; }
+        public string Username { get; set; } = null!;
 
-        public int IdPost { get; set; }
+        public string Name { get; set; } = null!;
 
-        public string Name { get; set; }
     }
 }
