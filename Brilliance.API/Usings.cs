@@ -1,6 +1,14 @@
-﻿global using Brilliance.API.Models;
-global using Brilliance.API.Query;
+﻿global using Brilliance.API.Commands.AddEntity;
+global using Brilliance.API.Commands.DeleteEntity;
+global using Brilliance.API.Models;
+global using Brilliance.API.Queris.Another;
+global using Brilliance.API.Queris.GetData;
+global using Brilliance.API.Queris.GetEntityById;
+global using Brilliance.API.Services.Interfaces;
 global using Brilliance.Database.Context;
 global using Brilliance.Database.Entities;
+global using Brilliance.Domain.Models.DTO;
 global using FluentValidation;
 global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;

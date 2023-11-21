@@ -1,13 +1,4 @@
-﻿using Brilliance.API.Commands.AddEntity;
-using Brilliance.API.Commands.DeleteEntity;
-using Brilliance.API.Commands.EditEntity;
-using Brilliance.API.Queris.Another;
-using Brilliance.API.Services.Interfaces;
-using Brilliance.Domain.Models.DTO;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
+﻿using Brilliance.API.Commands.EditEntity;
 
 namespace Brilliance.API.Controllers
 {
@@ -16,11 +7,9 @@ namespace Brilliance.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IPasswordHasher _passwordHasher;
-        public UserController(IMediator mediator, IPasswordHasher passwordHasher)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
-            _passwordHasher = passwordHasher;
         }
 
         /// <summary>
@@ -43,22 +32,31 @@ namespace Brilliance.API.Controllers
             await _mediator.Send(new AddUserCommand(userDTO.Username, userDTO.Password));
             return Ok();
         }
+        /// <summary>
+        /// Обновление пользователя
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UserDTO userDTO)
         {
             await _mediator.Send(new EditUserCommand(userDTO.Id, userDTO.Username, userDTO.Password));
             return Ok();
         }
+        /// <summary>
+        /// Удаление пользователя
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _mediator.Send(new DeleteUserCommand(id));
             return Ok();
         }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
-            => Ok(await _mediator.Send(new GetDataQuery<UserDTO, User>()));
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet]
+        //public async Task<IActionResult> GetUsers()
+        //    => Ok(await _mediator.Send(new GetDataQuery<UserDTO, User>()));
     }
 }

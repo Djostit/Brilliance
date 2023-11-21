@@ -2,20 +2,11 @@ using Brilliance.API.Behavior;
 using Brilliance.API.Extensions;
 using Brilliance.API.Middleware;
 using Brilliance.API.Services;
-using Brilliance.API.Services.Interfaces;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-Host.CreateDefaultBuilder(args)
-    .ConfigureWebHostDefaults(webBuilder =>
-    {
-        webBuilder.UseKestrel();
-        webBuilder.UseUrls("http://+:80");
-        webBuilder.UseStartup<Program>();
-    });
 
 builder.Services.AddControllers();
 
@@ -31,7 +22,10 @@ builder.Services.AddDbContext<BrillianceContext>(opt =>
 builder.Services
     .AddScoped<IPasswordHasher, PasswordHasher>()
     .AddScoped<ITokenService, TokenService>()
-    .AddScoped<IUserService, UserService>();
+    .AddScoped<IUserService, UserService>()
+    .AddScoped<IPostService, PostService>()
+    .AddScoped<ICommentService, CommentService>()
+    .AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Program>());
 
@@ -48,6 +42,9 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseHsts();
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 

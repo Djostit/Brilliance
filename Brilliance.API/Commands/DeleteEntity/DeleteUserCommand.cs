@@ -1,6 +1,4 @@
-﻿using Brilliance.API.Services.Interfaces;
-
-namespace Brilliance.API.Commands.DeleteEntity
+﻿namespace Brilliance.API.Commands.DeleteEntity
 {
     internal record DeleteUserCommand(int Id) : IRequest;
     internal class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
@@ -15,7 +13,7 @@ namespace Brilliance.API.Commands.DeleteEntity
             await _service.DeleteUser(request.Id, cancellationToken);
         }
     }
-    internal class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand> 
+    internal class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
     {
         public DeleteUserCommandValidator(IUserService userService)
         {

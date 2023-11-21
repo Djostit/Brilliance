@@ -45,9 +45,4 @@
     <ProjectReference Include="..\Brilliance.Domain\Brilliance.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queris\GetData\" />
-    <Folder Include="Queris\GetEntityById\" />
-  </ItemGroup>
-
 </Project>

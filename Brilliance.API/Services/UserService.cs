@@ -1,6 +1,4 @@
-﻿using Brilliance.API.Services.Interfaces;
-using Brilliance.Domain.Models;
-using Brilliance.Domain.Models.DTO;
+﻿using Brilliance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Brilliance.API.Services

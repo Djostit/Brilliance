@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brilliance.Database", "Bril
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brilliance.API.Client", "Brilliance.API.Client\Brilliance.API.Client.csproj", "{A6F7949A-09A2-445F-A823-D979502049FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brilliance.Encryption", "Brilliance.Encryption\Brilliance.Encryption.csproj", "{6B77B83F-B512-470A-8737-ECA3D398324D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{A6F7949A-09A2-445F-A823-D979502049FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F7949A-09A2-445F-A823-D979502049FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F7949A-09A2-445F-A823-D979502049FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B77B83F-B512-470A-8737-ECA3D398324D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B77B83F-B512-470A-8737-ECA3D398324D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B77B83F-B512-470A-8737-ECA3D398324D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B77B83F-B512-470A-8737-ECA3D398324D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

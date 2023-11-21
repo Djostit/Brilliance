@@ -9,7 +9,11 @@ namespace Brilliance.Domain.Models.DTO
     public class CommentDTO
     {
         public int Id { get; set; }
+
         public int IdUser { get; set; }
-        public string Name { get; set; } = null!;
+
+        public int IdPost { get; set; }
+
+        public string Name { get; set; }
     }
 }

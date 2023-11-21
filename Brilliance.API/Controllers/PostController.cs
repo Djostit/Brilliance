@@ -1,11 +1,4 @@
-﻿using Brilliance.API.Commands.AddEntity;
-using Brilliance.API.Commands.DeleteEntity;
-using Brilliance.API.Queris.GetEntityById;
-using Brilliance.API.Queris.GetPage;
-using Brilliance.Domain.Models.DTO;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Brilliance.API.Controllers
+﻿namespace Brilliance.API.Controllers
 {
     [ApiController]
     [Route("api/v1/posts")]
@@ -17,27 +10,26 @@ namespace Brilliance.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreatePost(PostDTO postDTO)
-        {
-            await _mediator.Send(new AddEntityCommand<PostDTO, Post>(postDTO));
-            return Ok();
-        }
-
         [HttpGet]
-        public async Task<IActionResult> GetPosts(int page, int size)
-            => Ok(await _mediator.Send(new GetPageQuery<PostDTO, Post>() { Page = page, Size = size }));
+        public async Task<IActionResult> GetPosts(int page = 1, int size = 5, string sort = "asc")
+            => Ok(await _mediator.Send(new GetPostsQuery(page, size, sort)));
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost([FromRoute] int id)
-            => Ok(await _mediator.Send(new GetEntityByIdQuery<PostDTO, Post>(id)));
+            => Ok(await _mediator.Send(new GetPostByIdQuery(id)));
+
+        [HttpPost]
+        public async Task<IActionResult> CreatePost(PostDTO postDTO)
+        {
+            await _mediator.Send(new AddPostCommand(postDTO.IdUser, postDTO.IdCategory, postDTO.Title, postDTO.Description));
+            return CreatedAtAction(null, null, null);
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost([FromRoute] int id)
         {
-            await _mediator.Send(new DeleteEntityByIdCommand<Post>(id));
+            await _mediator.Send(new DeletePostCommand(id));
             return NoContent();
-        }        
-        
+        }
     }
 }

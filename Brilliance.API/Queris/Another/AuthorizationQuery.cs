@@ -1,6 +1,4 @@
-﻿using Brilliance.API.Services.Interfaces;
-
-namespace Brilliance.API.Queris.Another
+﻿namespace Brilliance.API.Queris.Another
 {
     internal record AuthorizationQuery : IRequest<string>
     {

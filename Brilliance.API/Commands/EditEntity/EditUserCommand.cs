@@ -1,6 +1,4 @@
-﻿using Brilliance.API.Services.Interfaces;
-
-namespace Brilliance.API.Commands.EditEntity
+﻿namespace Brilliance.API.Commands.EditEntity
 {
     internal record EditUserCommand(int? Id, string Username, string Password) : IRequest;
     internal class EditUserCommandHandler : IRequestHandler<EditUserCommand>
@@ -20,7 +18,7 @@ namespace Brilliance.API.Commands.EditEntity
             }, cancellationToken);
         }
     }
-    internal class EditUserCommandValidator : AbstractValidator<EditUserCommand> 
+    internal class EditUserCommandValidator : AbstractValidator<EditUserCommand>
     {
         public EditUserCommandValidator(IUserService userService)
         {
