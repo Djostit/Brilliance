@@ -7,11 +7,11 @@ namespace Brilliance.MVC.Controllers
 {
     public class PostController : Controller
     {
-        private readonly IPost _post;
-        public PostController(IPost post)
-            => _post = post;
+        //private readonly IPost _post;
+        //public PostController(IPost post)
+        //    => _post = post;
         public async Task<IActionResult> Details([FromRoute] int id) 
-            => View(await _post.GetPost(id));
+            => View();
         public IActionResult Index()
             => View();
         [Authorize]

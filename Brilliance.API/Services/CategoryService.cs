@@ -10,7 +10,7 @@
         public async Task AddCategory(Category category, CancellationToken cancellationToken = default)
         {
             await _context.Categories.AddAsync(category, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);  
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteCategory(int id, CancellationToken cancellationToken = default)
@@ -22,7 +22,7 @@
 
         public async Task<bool> IsExists(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Categories.AnyAsync(c => c.Id == id, cancellationToken); 
+            return await _context.Categories.AnyAsync(c => c.Id == id, cancellationToken);
         }
     }
 }

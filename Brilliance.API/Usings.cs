@@ -10,5 +10,5 @@ global using Brilliance.Database.Entities;
 global using Brilliance.Domain.Models.DTO;
 global using FluentValidation;
 global using MediatR;
-global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;

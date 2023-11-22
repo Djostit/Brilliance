@@ -1,12 +1,104 @@
 ﻿@{
     ViewData["Title"] = "Post";
 }
-@model PostDTO
+
 <main class="section">
     <div class="container">
-        <h1 class="title-1">@Model.Title</h1>
+        <h1 class="title-1" id="postTitle"></h1>
         <div class="project-details__desc">
-            <p>@Model.Description</p>
+            <p id="postDescription"></p>
+        </div>
+
+        <div class="comments-section">
+            <h2 class="title-2">Comments</h2>
+            <ul id="commentsList" class="comments-list">
+            </ul>
+
+            <div class="comment-form">
+                <h3 class="title-3">Add a Comment</h3>
+                <form id="commentForm">
+                    <div class="form-group">
+                        <label for="commentContent">Comment:</label>
+                        <textarea id="commentContent" name="commentContent" required></textarea>
+                    </div>
+                    <button type="submit">Submit Comment</button>
+                </form>
+            </div>
         </div>
     </div>
 </main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var postId = window.location.pathname.split('/').pop();
+
+        fetch('http://localhost/api/v1/posts/' + postId, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+
+                var postTitleElement = document.getElementById('postTitle');
+                var postDescriptionElement = document.getElementById('postDescription');
+                var commentsListElement = document.getElementById('commentsList');
+
+                postTitleElement.textContent = data.title;
+                postDescriptionElement.textContent = data.description;
+
+                data.comments.forEach(comment => {
+                    var commentItem = document.createElement('li');
+                    commentItem.innerHTML = `<p><strong>${comment.username}:</strong> ${comment.name}</p>`;
+                    commentsListElement.appendChild(commentItem);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+        var commentForm = document.getElementById('commentForm');
+        commentForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var commentContent = document.getElementById('commentContent').value;
+
+            fetch('http://localhost/api/v1/comment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idUser: 1,
+                    idPost: postId,
+                    name: commentContent
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(newComment => {
+                    console.log('New Comment:', newComment);
+
+                    var commentItem = document.createElement('li');
+                    commentItem.innerHTML = `<p><strong>${newComment.username}:</strong> ${newComment.name}</p>`;
+                    commentsListElement.appendChild(commentItem);
+
+                    commentForm.reset();
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+    });
+</script>

@@ -1,6 +1,4 @@
 ﻿using Brilliance.Domain.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace Brilliance.API.Services
 {

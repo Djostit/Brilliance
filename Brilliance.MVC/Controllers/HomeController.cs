@@ -7,11 +7,11 @@ namespace Brilliance.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IPost _post;
-        public HomeController(IPost post)
-            => _post = post;
+        //private readonly IPost _post;
+        //public HomeController(IPost post)
+        //    => _post = post;
         public async Task<IActionResult> Index()
-            => View(await _post.GetPosts(1, 5));
+            => View();
 
         public IActionResult Privacy()
             => View();

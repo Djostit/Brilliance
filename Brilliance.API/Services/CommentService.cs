@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Brilliance.API.Services
+﻿namespace Brilliance.API.Services
 {
     public class CommentService : ICommentService
     {

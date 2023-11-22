@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Brilliance.API.Queris.Another
+﻿namespace Brilliance.API.Queris.Another
 {
     internal record AuthorizationQuery(string Username, string Password) : IRequest<string>;
     internal class AuthorizationQueryValidator : AbstractValidator<AuthorizationQuery>

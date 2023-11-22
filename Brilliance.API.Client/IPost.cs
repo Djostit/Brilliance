@@ -2,10 +2,10 @@
 {
     public interface IPost
     {
-        [Get("")]
-        Task<Page<PostDTO>> GetPosts([AliasAs("page")] int page, [AliasAs("size")] int size);
+        //[Get("")]
+        //Task<Page<PostDTO>> GetPosts([AliasAs("page")] int page, [AliasAs("size")] int size);
 
-        [Get("/{id}")]
-        Task<PostDTO> GetPost(int id);
+        //[Get("/{id}")]
+        //Task<PostDTO> GetPost(int id);
     }
 }

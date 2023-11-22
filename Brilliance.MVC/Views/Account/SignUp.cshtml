@@ -2,12 +2,12 @@
     ViewData["Title"] = "Sign up";
 }
 
-@model UserDTO
+@model UserRequest
 <main class="section">
     <div class="container">
         <h1 class="title-1">Sign up page</h1>
         <div class="card">
-            <form method="post" asp-action="SignInPost" class="card-form">
+            <form method="post" asp-action="SignUp" class="card-form">
                 <div class="input">
                     <input class="input-field" required type="text" asp-for="Username" name="Username" />
                     <label class="input-label" for="Username">Username</label>

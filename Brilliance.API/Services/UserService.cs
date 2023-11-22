@@ -1,6 +1,4 @@
 ﻿using Brilliance.Domain.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Brilliance.API.Services
 {

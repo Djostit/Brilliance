@@ -2,8 +2,8 @@
 @{
     ViewData["Title"] = "Home";
 }
-
-@model Page<PostDTO>
+@*
+@model Page<PostDTO>*@
 <header class="header">
     <div class="header__wrapper">
         <h1 class="header__title">
@@ -17,15 +17,40 @@
 
 <main class="section">
     <div class="container">
-        <ul class="projects">
-            @foreach(var item in Model.Items)
-            {
-                <li class="project">
-                    <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">
-                        <h3 class="project__title">@item.Title</h3>
-                    </a>
-                </li>
-            }
-        </ul>
+        <h1 class="title-1">Last posts</h1>
+        <ul class="projects"></ul>
     </div>
 </main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('http://localhost/api/v1/posts?page=1&size=5&sort=asc', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+
+                var projectsList = document.querySelector('.projects');
+                data.items.forEach(function (item) {
+                    var projectItem = document.createElement('li');
+                    projectItem.className = 'project';
+                    var projectLink = document.createElement('a');
+                    projectLink.href = '/Post/Details/' + item.id;
+                    projectLink.innerHTML = '<h3 class="project__title">' + item.title + '</h3>';
+                    projectItem.appendChild(projectLink);
+                    projectsList.appendChild(projectItem);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    });
+</script>
