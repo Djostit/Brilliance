@@ -1,6 +1,6 @@
 ﻿namespace Brilliance.API.Commands.AddEntity
 {
-    internal record AddCommentCommand(int IdPost, int IdUser, string Name) : IRequest;
+    internal record AddCommentCommand(int IdPost, int IdUser, string Name) : IRequest<CommentDTO>;
     internal class AddCommentCommandValidator : AbstractValidator<AddCommentCommand>
     {
         public AddCommentCommandValidator(IPostService postService, IUserService userService)
@@ -17,16 +17,16 @@
                 .MaximumLength(100).WithMessage("Много");
         }
     }
-    internal class AddCommentCommandHandler : IRequestHandler<AddCommentCommand>
+    internal class AddCommentCommandHandler : IRequestHandler<AddCommentCommand, CommentDTO>
     {
         private readonly ICommentService _service;
         public AddCommentCommandHandler(ICommentService service)
         {
             _service = service;
         }
-        public async Task Handle(AddCommentCommand request, CancellationToken cancellationToken)
+        public async Task<CommentDTO> Handle(AddCommentCommand request, CancellationToken cancellationToken)
         {
-            await _service.AddComment(new Comment
+            return await _service.AddComment(new Comment
             {
                 IdPost = request.IdPost,
                 IdUser = request.IdUser,

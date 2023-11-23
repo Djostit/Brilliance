@@ -20,8 +20,7 @@ namespace Brilliance.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateComment(CommentRequest comment)
         {
-            await _mediator.Send(new AddCommentCommand(comment.IdPost, comment.IdUser, comment.Name));
-            return CreatedAtAction(null, null, null);
+            return Ok(await _mediator.Send(new AddCommentCommand(comment.IdPost, comment.IdUser, comment.Name)));
         }
 
         /// <summary>

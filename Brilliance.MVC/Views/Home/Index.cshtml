@@ -1,9 +1,6 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home";
 }
-@*
-@model Page<PostDTO>*@
 <header class="header">
     <div class="header__wrapper">
         <h1 class="header__title">
@@ -17,13 +14,13 @@
 
 <main class="section">
     <div class="container">
-        <h1 class="title-1">Last posts</h1>
+        <h1 class="title-1">Latest posts</h1>
         <ul class="projects"></ul>
     </div>
 </main>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        fetch('http://localhost/api/v1/posts?page=1&size=5&sort=asc', {
+        fetch('http://localhost/api/v1/posts?page=1&size=5&sort=desc', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +40,7 @@
                     var projectItem = document.createElement('li');
                     projectItem.className = 'project';
                     var projectLink = document.createElement('a');
-                    projectLink.href = '/Post/Details/' + item.id;
+                    projectLink.href = '/post/details/' + item.id;
                     projectLink.innerHTML = '<h3 class="project__title">' + item.title + '</h3>';
                     projectItem.appendChild(projectLink);
                     projectsList.appendChild(projectItem);

@@ -19,7 +19,7 @@
                 <form id="commentForm">
                     <div class="form-group">
                         <label for="commentContent">Comment:</label>
-                        <textarea id="commentContent" name="commentContent" required></textarea>
+                        <input type="text" id="commentContent" name="commentContent" required></input>
                     </div>
                     <button type="submit">Submit Comment</button>
                 </form>
@@ -76,7 +76,7 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    idUser: 1,
+                    idUser: 3,
                     idPost: postId,
                     name: commentContent
                 })

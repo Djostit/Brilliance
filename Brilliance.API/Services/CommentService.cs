@@ -7,10 +7,16 @@
         {
             _context = context;
         }
-        public async Task AddComment(Comment comment, CancellationToken cancellationToken = default)
+        public async Task<CommentDTO> AddComment(Comment comment, CancellationToken cancellationToken = default)
         {
             await _context.Comments.AddAsync(comment, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+            return new CommentDTO
+            {
+                Id = comment.Id,
+                Username = (await _context.Users.FindAsync(comment.IdUser)).Username,
+                Name = comment.Name
+            };
         }
 
         public async Task DeleteComment(int id, CancellationToken cancellationToken = default)
