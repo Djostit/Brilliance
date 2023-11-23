@@ -33,16 +33,34 @@
                 return response.json();
             })
             .then(data => {
-                console.log(data);
-
                 var projectsList = document.querySelector('.projects');
+                var userIsAdmin = "@User.IsInRole("Admin").ToString().ToLower()" === "true";
                 data.items.forEach(function (item) {
                     var projectItem = document.createElement('li');
                     projectItem.className = 'project';
+                    var projectBlock = document.createElement('div');
+                    projectBlock.classList.add('project-block');
+
                     var projectLink = document.createElement('a');
                     projectLink.href = '/post/details/' + item.id;
                     projectLink.innerHTML = '<h3 class="project__title">' + item.title + '</h3>';
-                    projectItem.appendChild(projectLink);
+                    
+                    projectBlock.appendChild(projectLink);
+
+                    if (userIsAdmin) {
+                        var deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.classList.add('delete-button');
+
+                        deleteButton.addEventListener('click', function () {
+                            deleteproject();
+                        });
+
+                        projectBlock.appendChild(deleteButton);
+                    }
+
+                    projectItem.appendChild(projectBlock);
+
                     projectsList.appendChild(projectItem);
                 });
             })

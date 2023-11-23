@@ -310,15 +310,21 @@ body {
 /* Projects  */
 
 .projects {
+	padding: 0;
+}
+
+.projects li {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.project-block {
 	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	column-gap: 30px;
-	row-gap: 30px;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .project {
-	max-width: 370px;
 	background-color: var(--project-card-bg);
 	box-shadow: var(--box-shadow);
 	border-radius: 10px;
@@ -492,6 +498,98 @@ body {
 .card-info a:hover {
 	opacity: 0.8;
 }
+
+/* Comment */
+
+.comment-form {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.comment-input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.comment-input-field {
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.comment-submit-button {
+	background-color: var(--accent);
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.comment-submit-button::before {
+  content: "\2192";
+  margin-right: 5px;
+}
+
+.comment-submit-button:hover {
+	opacity: 0.7;
+}
+
+.comment-submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.comments-section {
+    margin-top: 20px;
+}
+
+.comments-list {
+    list-style: none;
+    padding: 0;
+}
+
+.comments-list li {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.comment-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-block p {
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.comment-block strong {
+    font-weight: bold;
+    margin-right: 2px;
+}
+
+.delete-button {
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.delete-button:hover {
+    color:var(--accent);
+}
+
+
 
 /* Footer */
 

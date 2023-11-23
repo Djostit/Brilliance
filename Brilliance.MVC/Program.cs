@@ -22,7 +22,7 @@ builder.Services.AddRouting(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:90"));
+        builder => builder.WithOrigins("http://localhost:90", "http://localhost:9999"));
 });
 
 builder.Services.AddAuthorization();

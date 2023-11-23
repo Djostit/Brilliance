@@ -8,22 +8,32 @@
         <div class="project-details__desc">
             <p id="postDescription"></p>
         </div>
-
         <div class="comments-section">
             <h2 class="title-2">Comments</h2>
-            <ul id="commentsList" class="comments-list">
-            </ul>
-
-            <div class="comment-form">
-                <h3 class="title-3">Add a Comment</h3>
-                <form id="commentForm">
-                    <div class="form-group">
-                        <label for="commentContent">Comment:</label>
-                        <input type="text" id="commentContent" name="commentContent" required></input>
+            <ul id="commentsList" class="comments-list"></ul>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form id="commentForm" class="comment-form">
+                    <div class="comment-input">
+                        <input class="comment-input-field" type="text" id="commentContent" name="commentContent" required placeholder="Write a comment..." />
                     </div>
-                    <button type="submit">Submit Comment</button>
+                    <div class="comment-action">
+                        <button id="submitButton" disabled type="submit" class="comment-submit-button"></button>
+                    </div>
                 </form>
-            </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        var commentInput = document.getElementById("commentContent");
+                        var submitButton = document.getElementById("submitButton");
+                        commentInput.addEventListener("input", function () {
+                            submitButton.disabled = commentInput.value.trim() === "";
+                        });
+                    });
+                </script>
+                <script>
+                    var commentFormRendered = true;
+                </script>
+            }
         </div>
     </div>
 </main>
@@ -54,51 +64,82 @@
                 postTitleElement.textContent = data.title;
                 postDescriptionElement.textContent = data.description;
 
+                var userIsAdmin = "@User.IsInRole("Admin").ToString().ToLower()" === "true";
                 data.comments.forEach(comment => {
                     var commentItem = document.createElement('li');
-                    commentItem.innerHTML = `<p><strong>${comment.username}:</strong> ${comment.name}</p>`;
+                    var commentBlock = document.createElement('div');
+                    commentBlock.classList.add('comment-block');
+
+                    var commentContent = document.createElement('p');
+                    commentContent.innerHTML = `<strong>${comment.username}:</strong> ${comment.name}`;
+
+                    commentBlock.appendChild(commentContent);
+
+                    if(userIsAdmin){
+                        var deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.classList.add('delete-button');
+
+                        deleteButton.addEventListener('click', function () {
+                            deleteComment();
+                        });
+
+                        commentBlock.appendChild(deleteButton);
+                    }
+
+                    commentItem.appendChild(commentBlock);
+
                     commentsListElement.appendChild(commentItem);
                 });
+
+
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
+        if (typeof commentFormRendered !== 'undefined' && commentFormRendered) {
+            var commentForm = document.getElementById('commentForm');
+            commentForm.addEventListener('submit', function (event) {
+                event.preventDefault();
 
-        var commentForm = document.getElementById('commentForm');
-        commentForm.addEventListener('submit', function (event) {
-            event.preventDefault();
+                var commentContent = document.getElementById('commentContent').value;
 
-            var commentContent = document.getElementById('commentContent').value;
-
-            fetch('http://localhost/api/v1/comment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    idUser: 3,
-                    idPost: postId,
-                    name: commentContent
+                fetch('http://localhost/api/v1/comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        idUser: 3,
+                        idPost: postId,
+                        name: commentContent
+                    })
                 })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(newComment => {
-                    console.log('New Comment:', newComment);
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(newComment => {
+                        console.log('New Comment:', newComment);
 
-                    var commentItem = document.createElement('li');
-                    commentItem.innerHTML = `<p><strong>${newComment.username}:</strong> ${newComment.name}</p>`;
-                    commentsListElement.appendChild(commentItem);
+                        var commentItem = document.createElement('li');
+                        var commentsListElement = document.getElementById('commentsList');
+                        commentItem.innerHTML = `<p><strong>${newComment.username}:</strong> ${newComment.name}`;
+                        var userIsAdmin = "@User.IsInRole("Admin").ToString().ToLower()" === "true";
+                        if (userIsAdmin) {
+                            commentItem.innerHTML += `<button onclick="">Delete</button>`;
+                        }
+                        commentItem.innerHTML += `</p>`;
+                        commentsListElement.appendChild(commentItem);
 
-                    commentForm.reset();
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
-        });
+                        commentForm.reset();
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            });
+        }
     });
 </script>
