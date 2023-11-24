@@ -25,7 +25,7 @@
             _accountService = accountService;
         }
         public async Task<string> Handle(AuthorizationQuery request, CancellationToken cancellationToken)
-            => _tokenService.GenerateJwtToken(request.Username,
+            => _tokenService.GenerateJwtToken(await _accountService.GetUserId(request.Username, cancellationToken),
                 await _accountService.GetUserRole(request.Username, cancellationToken));
     }
 }

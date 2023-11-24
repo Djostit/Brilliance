@@ -457,9 +457,13 @@ body {
     transform: translateY(-1.5rem);
 }
 
+.input-select option{
+	color: #fff;
+	background-color: var(--black);
+}
 
 .action {
-    margin-top: 2rem;
+	margin-top: 2rem;
 }
 
 .action-button {
@@ -589,6 +593,54 @@ body {
     color:var(--accent);
 }
 
+/* Pagination */
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.pagination-container {
+	display: flex;
+	align-items: center;
+	background-color: var(--black);
+	padding: 10px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.pagination button {
+	padding: 2px;
+	font-size: 16px;
+	cursor: pointer;
+	border: none;
+	color: white;
+	border-radius: 5px;
+	background-color: var(--accent);
+}
+
+.pagination button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
+#prevPageBtn::before {
+    content: "\2190";
+    margin-right: 5px;
+}
+
+#nextPageBtn::after {
+    content: "\2192";
+    margin-left: 5px;
+}
+
+#currentPage {
+	font-size: 18px;
+	color: #fff;
+	margin: 0 10px;
+}
 
 
 /* Footer */

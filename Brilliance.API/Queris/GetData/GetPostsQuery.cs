@@ -2,10 +2,10 @@
 
 namespace Brilliance.API.Queris.GetData
 {
-    internal record GetPostsQuery(int Page, int Size, string Sort) : IRequest<Pagination<Post>>;
+    internal record GetPostsQuery(int Page, int Size, string Sort, int? CategoryId) : IRequest<Pagination<Post>>;
     internal class GetPostsQueryValidator : AbstractValidator<GetPostsQuery>
     {
-        public GetPostsQueryValidator()
+        public GetPostsQueryValidator(ICategoryService categoryService)
         {
             RuleFor(x => x.Page)
                 .NotEmpty();
@@ -15,6 +15,10 @@ namespace Brilliance.API.Queris.GetData
 
             RuleFor(x => x.Sort)
                 .NotEmpty();
+
+            RuleFor(x => x.CategoryId)
+                .MustAsync(async (categoryId, cancel) => categoryId == null || await categoryService.IsExists(categoryId.Value))
+                .WithMessage("Выбранной категории не существует.");
         }
     }
     internal class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, Pagination<Post>>
@@ -26,7 +30,7 @@ namespace Brilliance.API.Queris.GetData
         }
         public async Task<Pagination<Post>> Handle(GetPostsQuery request, CancellationToken cancellationToken)
         {
-            return await _service.GetPosts(request.Page, request.Size, request.Sort, cancellationToken);
+            return await _service.GetPosts(request.Page, request.Size, request.Sort, request.CategoryId, cancellationToken);
         }
     }
 }

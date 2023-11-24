@@ -2,6 +2,6 @@
 {
     public interface ITokenService
     {
-        public string GenerateJwtToken(string username, string role);
+        public string GenerateJwtToken(int id, string role);
     }
 }

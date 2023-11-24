@@ -29,8 +29,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddControllersWithViews();
 
-//builder.Services.AddRefitClient<IPost>()
-//    .ConfigureHttpClient(b => b.BaseAddress = new Uri("http://localhost:10000/api/v1/posts"));
+builder.Services.AddRefitClient<IPostClient>()
+    .ConfigureHttpClient(b => b.BaseAddress = new Uri("http://localhost/api/v1/posts"));
 
 builder.Services.AddRefitClient<IUserClient>()
     .ConfigureHttpClient(b => b.BaseAddress = new Uri("http://localhost/api/v1/users"));

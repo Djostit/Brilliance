@@ -17,7 +17,9 @@ namespace Brilliance.API.Services
 
         public async Task DeletePost(int id, CancellationToken cancellationToken = default)
         {
-            var post = await _context.Posts.FindAsync(new object?[] { id, cancellationToken }, cancellationToken);
+            var post = await _context.Posts.Include(p => p.Comments)
+                .FirstAsync(x => x.Id == id, cancellationToken);
+            _context.Comments.RemoveRange(post.Comments);
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync(cancellationToken);
         }
@@ -43,9 +45,10 @@ namespace Brilliance.API.Services
                 }).FirstAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<Pagination<Post>> GetPosts(int page, int size, string sort, CancellationToken cancellationToken = default)
+        public async Task<Pagination<Post>> GetPosts(int page, int size, string sort, int? categoryid, CancellationToken cancellationToken = default)
         {
-            var query = _context.Posts.AsQueryable();
+            var query = _context.Posts.AsQueryable()
+                .Where(x => categoryid == null || x.IdCategory == categoryid);
             return new Pagination<Post>()
             {
                 Items = await query

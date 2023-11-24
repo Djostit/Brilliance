@@ -1,26 +1,53 @@
-﻿@{
+﻿@using System.Security.Claims;
+@{
     ViewData["Title"] = "Create post";
 }
-
+@model PostRequest
 <main class="section">
     <div class="container">
-        <h1 class="title-1">Create post page</h1>
+        <h1 class="title-1">Create post</h1>
         <div class="card">
             <form method="post" asp-action="Create" class="card-form">
-                @*<div class="input">
-                <input class="input-field" required type="text" asp-for="Username" name="Username" />
-                <label class="input-label" for="Username">Username</label>
-                <span asp-validation-for="Username"></span>
+                <input asp-for="IdUser" value="@User?.FindFirst(ClaimTypes.NameIdentifier)?.Value.ToString()" hidden />
+                <div class="input">
+                    <select class="input-select" id="categorySelect" required name="IdCategory" asp-for="IdCategory"></select>
+                    <label class="input-label" for="IdCategory">Category</label>
                 </div>
                 <div class="input">
-                <input class="input-field" required type="password" id="Password" asp-for="Password" name="Password" />
-                <label class="input-label" for="Password">Password</label>
-                <span asp-validation-for="Password"></span>
+                    <input class="input-field" required type="text" asp-for="Title" name="Title" />
+                    <label class="input-label" for="Title">Title</label>
+                    <span asp-validation-for="Title"></span>
+                </div>
+                <div class="input">
+                    <input class="input-field" required type="text" asp-for="Description" name="Description" />
+                    <label class="input-label" for="Title">Description</label>
+                    <span asp-validation-for="Description"></span>
                 </div>
                 <div class="action">
-                <button type="submit" class="action-button">Sign in</button>
-                </div>*@
+                    <button type="submit" class="action-button">Create</button>
+                </div>
             </form>
         </div>
     </div>
 </main>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'http://localhost/api/v1/categories',
+                method: 'GET',
+                success: function (data) {
+                    var selectElement = $('#categorySelect');
+
+                    for (var i = 0; i < data.length; i++) {
+                        selectElement.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                },
+                error: function () {
+                    console.error('Failed to load categories');
+                }
+            });
+        });
+    </script>
+}

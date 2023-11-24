@@ -13,7 +13,7 @@ namespace Brilliance.API.Services
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken(string username, string role)
+        public string GenerateJwtToken(int id, string role)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
@@ -23,7 +23,7 @@ namespace Brilliance.API.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, username),
+                    new Claim(ClaimTypes.NameIdentifier, id.ToString()),
                     new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.Now.AddMinutes(30),

@@ -13,8 +13,8 @@ namespace Brilliance.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPosts(int page = 1, int size = 5, string sort = "asc")
-            => Ok(await _mediator.Send(new GetPostsQuery(page, size, sort)));
+        public async Task<IActionResult> GetPosts(int page = 1, int size = 5, string sort = "asc", int? categoryId = null)
+            => Ok(await _mediator.Send(new GetPostsQuery(page, size, sort, categoryId)));
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost([FromRoute] int id)

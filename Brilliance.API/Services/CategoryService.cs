@@ -7,6 +7,14 @@
         {
             _context = context;
         }
+        public async Task<List<CategoryDTO>> GetCategories(CancellationToken cancellationToken = default)
+        {
+            return await _context.Categories.Select(x => new CategoryDTO
+            {
+                Id  = x.Id,
+                Name = x.Name
+            }).ToListAsync(cancellationToken);
+        }
         public async Task AddCategory(Category category, CancellationToken cancellationToken = default)
         {
             await _context.Categories.AddAsync(category, cancellationToken);

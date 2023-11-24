@@ -57,6 +57,9 @@ namespace Brilliance.MVC.Controllers
                     new Claim(ClaimTypes.Role, new JwtSecurityTokenHandler()
                         .ReadJwtToken(response)
                         .Claims.FirstOrDefault(claim => claim.Type == "role")?.Value),
+                    new Claim(ClaimTypes.NameIdentifier, new JwtSecurityTokenHandler()
+                        .ReadJwtToken(response)
+                        .Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value),
                     new Claim("AccessToken", response)
                 }, CookieAuthenticationDefaults.AuthenticationScheme)),
                 new AuthenticationProperties() { IsPersistent = true });

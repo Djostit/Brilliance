@@ -34,10 +34,10 @@ namespace Brilliance.API.Services
         }
         public async Task<Pagination<User>> GetUsers(int page, int size, CancellationToken cancellationToken)
         {
-            var foo = _context.Users.AsQueryable();
+            var users = _context.Users.AsQueryable();
             return new Pagination<User>
             {
-                Items = await foo
+                Items = await users
                 .Skip((page - 1) * size)
                 .Take(size)
                 .ToListAsync(cancellationToken),
@@ -45,7 +45,7 @@ namespace Brilliance.API.Services
                 {
                     CurrentPage = page,
                     Size = size,
-                    TotalCount = await foo.CountAsync(cancellationToken)
+                    TotalCount = await users.CountAsync(cancellationToken)
                 }
             };
         }
@@ -66,6 +66,11 @@ namespace Brilliance.API.Services
         {
             var user = await _context.Users.FirstAsync(x => x.Username == username, cancellationToken);
             return _passwordHasher.VerifyPassword(user.Password, password);
+        }
+
+        public async Task<int> GetUserId(string username, CancellationToken cancellationToken = default)
+        {
+            return (await _context.Users.FirstAsync(x => x.Username == username, cancellationToken)).Id;
         }
     }
 }
