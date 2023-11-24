@@ -15,7 +15,7 @@ Brilliance – форум гильдии программистов C#.
 Приложение написано на языке C# с использованием следующих технологий:
 - ASP.NET MVC Core 
 - ASP.NET Core WebApi
-- PostreSQL
+- MySQL
 - EF Core
 - MediatR
 - FluentValidation
