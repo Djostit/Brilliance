@@ -53,11 +53,19 @@
                         deleteButton.classList.add('delete-button');
 
                         deleteButton.addEventListener('click', function () {
-                            deleteproject();
+                            var postId = deleteButton.getAttribute('data-id');
+
+                            deletePost(postId);
+
+                            projectItem.remove();
                         });
+
+                        // Устанавливаем атрибут data-id на кнопку с ID поста
+                        deleteButton.setAttribute('data-id', item.id);
 
                         projectBlock.appendChild(deleteButton);
                     }
+
 
                     projectItem.appendChild(projectBlock);
 
@@ -68,4 +76,30 @@
                 console.error('There was a problem with the fetch operation:', error);
             });
     });
+</script>
+<script>
+    function deletePost(postId) {
+        var deleteUrl = 'http://localhost/api/v1/posts/' + postId;
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        fetch(deleteUrl, requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                //return response.json();
+            })
+            .then(data => {
+                console.log('Post deleted successfully', data);
+            })
+            .catch(error => {
+                console.error('Error deleting post:', error);
+            });
+    }
 </script>
