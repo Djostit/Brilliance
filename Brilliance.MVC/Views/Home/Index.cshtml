@@ -60,7 +60,6 @@
                             projectItem.remove();
                         });
 
-                        // Устанавливаем атрибут data-id на кнопку с ID поста
                         deleteButton.setAttribute('data-id', item.id);
 
                         projectBlock.appendChild(deleteButton);
@@ -93,7 +92,6 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                //return response.json();
             })
             .then(data => {
                 console.log('Post deleted successfully', data);
