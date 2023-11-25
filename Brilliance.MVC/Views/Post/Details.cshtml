@@ -130,16 +130,68 @@
                             return response.json();
                         })
                         .then(newComment => {
-                            console.log('New Comment:', newComment);
+                            // console.log('New Comment:', newComment);
+
+                            // var commentItem = document.createElement('li');
+                            // var commentBlock = document.createElement('div');
+                            // commentBlock.classList.add('comment-block');
+
+                            // var commentsListElement = document.getElementById('commentsList');
+                            // commentItem.innerHTML = `<p><strong>${newComment.username}:</strong> ${newComment.name}`;
+                            // commentBlock.appendChild(commentItem);
+
+                            // var userIsAdmin = "@User.IsInRole("Admin").ToString().ToLower()" === "true";
+                            // if (userIsAdmin) {
+                            //     var deleteButton = document.createElement('button');
+                            //     deleteButton.textContent = 'Delete';
+                            //     deleteButton.classList.add('delete-button');
+
+                            //     deleteButton.addEventListener('click', function () {
+                            //         var commentId = deleteButton.getAttribute('data-id');
+
+                            //         deleteComment(commentId);
+
+                            //         commentItem.remove();
+                            //     });
+
+                            //     deleteButton.setAttribute('data-id', newComment.id);
+
+                            //     commentBlock.appendChild(deleteButton);
+                            // }
+                            // commentItem.innerHTML += `</p>`;
+                            // commentsListElement.appendChild(commentItem);
+                            var userIsAdmin = "@User.IsInRole("Admin").ToString().ToLower()" === "true";
+                            var commentsListElement = document.getElementById('commentsList');
 
                             var commentItem = document.createElement('li');
-                            var commentsListElement = document.getElementById('commentsList');
-                            commentItem.innerHTML = `<p><strong>${newComment.username}:</strong> ${newComment.name}`;
-                            var userIsAdmin = "@User.IsInRole("Admin").ToString().ToLower()" === "true";
+                            var commentBlock = document.createElement('div');
+                            commentBlock.classList.add('comment-block');
+
+                            var commentContent = document.createElement('p');
+                            commentContent.innerHTML = `<strong>${newComment.username}:</strong> ${newComment.name}`;
+
+                            commentBlock.appendChild(commentContent);
+
                             if (userIsAdmin) {
-                                commentItem.innerHTML += `<button onclick="">Delete</button>`;
+                                var deleteButton = document.createElement('button');
+                                deleteButton.textContent = 'Delete';
+                                deleteButton.classList.add('delete-button');
+
+                                deleteButton.addEventListener('click', function () {
+                                    var commentId = deleteButton.getAttribute('data-id');
+
+                                    deleteComment(commentId);
+
+                                    commentItem.remove();
+                                });
+
+                                deleteButton.setAttribute('data-id', newComment.id);
+
+                                commentBlock.appendChild(deleteButton);
                             }
-                            commentItem.innerHTML += `</p>`;
+
+                            commentItem.appendChild(commentBlock);
+
                             commentsListElement.appendChild(commentItem);
 
                             commentForm.reset();

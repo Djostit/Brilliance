@@ -20,7 +20,7 @@
                         Name = "User",
                     },new()
                     {
-                        Name = "Moderator",
+                        Name = "Admin",
                     }
                 });
                 await _context.SaveChangesAsync();

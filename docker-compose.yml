@@ -16,7 +16,7 @@ services:
         context: .
         dockerfile: mvc
     environment:
-    - ASPNETCORE_URLS=http://+:80
+    - ASPNETCORE_URLS=http://+:81
     networks:
     - dev
 
