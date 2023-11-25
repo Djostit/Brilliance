@@ -11,6 +11,13 @@
 # Brilliance
 Brilliance – форум гильдии программистов C#.
 
+## Установка
+1. Распаковать архив
+2. Открыть в терминале папку и прописать docker-compose up
+3. Открыть любой субд и войти localhost port 3307 password 1234
+4. Выполнить init.sql который находит в папке mysql-scripts
+5. Запустить MVC
+
 ## Технологии
 Приложение написано на языке C# с использованием следующих технологий:
 - ASP.NET MVC Core 
@@ -21,6 +28,8 @@ Brilliance – форум гильдии программистов C#.
 - FluentValidation
 - Refit
 - BCypt
+
+
 
 ## Команда
 - [Djostit](https://github.com/Djostit)
