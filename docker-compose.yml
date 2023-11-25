@@ -5,6 +5,21 @@ networks:
     driver: bridge
 
 services:
+  app_mvc:
+    image: ${DOCKER_REGISTRY-}webmvc
+    depends_on:
+    - "app_api"
+    container_name: app_mvc
+    ports:
+    - "81:80"
+    build:
+        context: .
+        dockerfile: mvc
+    environment:
+    - ASPNETCORE_URLS=http://+:80
+    networks:
+    - dev
+
   app_api:
     image: ${DOCKER_REGISTRY-}webapi
     depends_on:
@@ -14,11 +29,10 @@ services:
     - "80:80"
     build:
         context: .
-        dockerfile: Dockerfile
+        dockerfile: api
     environment:
     - ConnectionStrings__DefaultConnection=host=app_db;username=root;password=1234;port=3306;database=db_brilliance;
     - ASPNETCORE_URLS=http://+:80
-    - ASPNETCORE_ENVIRONMENT=Development 
     networks:
     - dev
 
